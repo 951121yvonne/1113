@@ -1,0 +1,246 @@
+/* ------------------------------------- */
+/* CSS 變數：方便統一修改顏色 */
+/* ------------------------------------- */
+:root {
+    --primary-color: #232323;         /* 主要文字/深色背景色 */
+    --light-text-color: #f0f0f0;      /* 淺色文字 (用於封面和漢堡按鈕) */
+    --accent-color: #46fbe3;          /* 選單懸停色/返回按鈕底色 (紅色系) */
+    --secondary-accent-color: #866eb3; /* 關於頁面標題色 (黃色系) */
+    --menu-bg-alpha: 0.95;            /* 選單背景透明度 */
+}
+
+/* ------------------------------------- */
+/* 網站通用樣式 */
+/* ------------------------------------- */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: var(--light-text-color); /* 封面文字改為淺色 */
+    overflow-x: hidden;
+}
+
+/* 封面文字樣式 */
+#cover-text {
+    position: fixed;
+    top: 20%;
+    left: 5%;
+    z-index: 10; 
+    width: 40%; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    color: var(--light-text-color);
+}
+#cover-text h1 {
+    font-size: 3em;
+}
+
+/* ------------------------------------- */
+/* p5.js 畫布定位（確保在最底層） */
+/* ------------------------------------- */
+canvas {
+    display: block; 
+    z-index: -1; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    will-change: transform; /* 硬體加速優化 */
+}
+
+/* ------------------------------------- */
+/* 漢堡選單樣式 */
+/* ------------------------------------- */
+
+/* 漢堡圖示按鈕 */
+#menu-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 20; 
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--light-text-color); 
+    background-color: rgba(35, 35, 35, 0.5); 
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.2s;
+}
+
+/* 導航選單本體 */
+#main-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: rgba(35, 35, 35, var(--menu-bg-alpha)); 
+    color: white;
+    z-index: 15;
+    transform: translateX(0); 
+    transition: transform 0.3s ease-in-out;
+    padding-top: 60px; 
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* 選單隱藏狀態 */
+#main-menu.hidden {
+    transform: translateX(100%); 
+}
+
+#main-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#main-menu li a {
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 1.1em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s;
+}
+
+#main-menu li a:hover {
+    background-color: var(--accent-color);
+}
+
+/* ------------------------------------- */
+/* iframe 懸浮視窗樣式 */
+/* ------------------------------------- */
+
+#iframe-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7); 
+    z-index: 50; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px); 
+}
+
+#iframe-overlay.hidden {
+    display: none;
+}
+
+#content-iframe {
+    width: 85%; 
+    height: 85%; 
+    max-width: 1200px; 
+    max-height: 800px; 
+    background-color: white; 
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+    transition: transform 0.3s ease-out;
+}
+
+/* 返回主封面按鈕樣式 */
+#close-iframe {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 60;
+    padding: 10px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    background-color: var(--accent-color); 
+    border: 2px solid white;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+#close-iframe:hover {
+    background-color: #18a496;
+    transform: translateX(-50%) scale(1.05);
+}
+
+/* 防止背景滾動 */
+.iframe-active {
+    overflow: hidden;
+}
+
+/* ------------------------------------- */
+/* 自我介紹頁面 (about.html) 樣式 */
+/* ------------------------------------- */
+#about-page {
+    background-image: url('./assets/background.jpg'); 
+    
+    /* ⭐ 修改為 contain，讓圖片完整顯示 */
+    background-size: contain; 
+    background-repeat: no-repeat; 
+    background-color: #000000; /* 填補空白區域 */
+
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#about-info {
+    text-align: center;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.6); 
+    border-radius: 10px;
+}
+
+#about-info h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: var(--secondary-accent-color);
+}
+
+#about-info p {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+/* 隱藏 about.html 內的返回按鈕，使用外部的 close-iframe */
+.back-link {
+    display: none; 
+}
+
+
+/* ------------------------------------- */
+/* 響應式優化 */
+/* ------------------------------------- */
+@media (max-width: 600px) {
+    #main-menu {
+        width: 80%;
+    }
+
+    #cover-text {
+        top: 15%; 
+        left: 20px; 
+        width: calc(100% - 40px);
+    }
+    
+    #content-iframe {
+        width: 95%;
+        height: 95%;
+        border-radius: 0;
+    }
+
+    #close-iframe {
+        top: 10px;
+        left: 20px; 
+        transform: none; 
+    }
+}

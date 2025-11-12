@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="p5.js 動態生成的互動式封面作品集。">
+    <meta name="theme-color" content="#232323"> 
+    <title>p5.js 動態封面作品集 | 謝沐珊</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="sketch.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    
+    <button id="menu-toggle" onclick="toggleMenu()" aria-controls="main-menu" aria-expanded="false" aria-label="選單切換">
+        <span aria-hidden="true">&#9776;</span> 
+    </button>
+
+    <nav id="main-menu" class="hidden">
+        <ul>
+            <li><a href="#" data-url="https://951121yvonne.github.io/20251014--/" onclick="loadIframe(event)">作品一: 泡泡爆破 🎈</a></li>
+            <li><a href="#" data-url="https://hackmd.io/@wTKBN8_3R_CaYngGb9pZrQ/SymgKOJ2xg" onclick="loadIframe(event)">作品二: 作業筆記 📝</a></li>
+            <li><a href="#" data-url="https://951121yvonne.github.io/quiz/" onclick="loadIframe(event)">作品三: 測驗 ❓</a></li>
+            <li><a href="#" data-url="about.html" onclick="loadIframe(event)">作品四: 自我介紹 👤</a></li>
+            <li><a href="#" data-url="https://hackmd.io/@wTKBN8_3R_CaYngGb9pZrQ/rkbhXyPJWg" onclick="loadIframe(event)">期中作業筆記 📚</a></li>
+            
+            <li><a href="#" onclick="closeIframe(); toggleMenu();">回到主選單 🏡</a></li>
+        </ul>
+    </nav>
+
+    <header id="cover-text">
+        <h1>p5.js 動態生成封面</h1>
+        <p>點擊右上方圖示展開選單</p>
+    </header>
+    
+    <div id="iframe-overlay" class="hidden">
+        <button id="close-iframe" onclick="closeIframe()">
+            ← 返回主封面
+        </button>
+        <iframe id="content-iframe" src="" frameborder="0"></iframe>
+    </div>
+    
+    <script>
+        const menu = document.getElementById('main-menu');
+        const toggleButton = document.getElementById('menu-toggle');
+        const iframeOverlay = document.getElementById('iframe-overlay');
+        const contentIframe = document.getElementById('content-iframe');
+
+        // 導航選單切換邏輯
+        function toggleMenu() {
+            const isHidden = menu.classList.toggle('hidden');
+            toggleButton.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
+            // 當選單打開時，防止背景內容滾動
+            document.body.classList.toggle('menu-open', !isHidden);
+        }
+
+        // 載入 iframe 邏輯
+        function loadIframe(event) {
+            event.preventDefault(); 
+            const url = event.target.getAttribute('data-url');
+            
+            toggleMenu(); // 隱藏導航選單
+
+            contentIframe.src = url;
+            iframeOverlay.classList.remove('hidden');
+            document.body.classList.add('iframe-active'); // 防止背景滾動
+        }
+
+        // 關閉 iframe 邏輯
+        function closeIframe() {
+            iframeOverlay.classList.add('hidden');
+            contentIframe.src = ""; // 清除 iframe 內容
+            document.body.classList.remove('iframe-active');
+        }
+    </script>
+
+</body>
+</html>
